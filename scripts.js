@@ -2,6 +2,22 @@
 
 const amount = document.getElementById('amount');
 
+
+//filtering numbers, only
 amount.oninput = () =>{
-    console.log("content altered")
+    let value = amount.value.replace(/\D,/g, '');
+
+    // passes the value to cents, so it can be properly formatted afterwards
+    value = Number(value/100);
+
+    amount.value = value=formatCurrencyToBrl(value);
+}
+
+function formatCurrencyToBrl(value){
+     value.toLocaleString('pt-BR', {
+        style: 'currency',
+         currency: 'BRL'
+    });
+
+    return value;
 }
