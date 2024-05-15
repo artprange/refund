@@ -4,6 +4,9 @@ const amount = document.getElementById('amount');
 const expense = document.getElementById('expense');
 const category = document.getElementById('category');
 
+//selects the list element
+const expenseList = document.querySelector('ul');
+
 
 
 //filtering numbers, only
@@ -31,6 +34,34 @@ form.onsubmit = (event) => {
     const newExpense={
         id: new Date().getTime(),
         expense: expense.value,
-        category_id: 
+        category_id: category.value,
+        category_name: category.options[category.selectedIndex].text,
+        amount: amount.value,
+        created_at: new Date(),
     }
 }    
+
+function addExpense(newExpense){
+  
+
+    try{
+        //creates the list element
+        const expenseItem = document.createElement('li');
+        expenseItem.classList.add("expense");
+
+        //creates the category icon
+        const expenseIcon = document.createElement('img');
+        expenseIcon.setAttribute('src', `./img/${newExpense.category_id}.svg`);
+        expenseIcon.setAttribute('alt', newExpense.category_name);
+
+        //adds the information to the list element
+        expenseItem.append(expenseIcon)
+
+        //adds the item to the list
+        expenseList.append(expenseItem);
+
+    } catch(error){
+        alert("Não foi possível atualizar sua lista de despesas. Tente novamente em alguns minutos.")
+    }
+   
+}
