@@ -11,13 +11,14 @@ const expenseList = document.querySelector('ul');
 
 //filtering numbers, only
 amount.oninput = () =>{
-    let value = amount.value.replace(/\D,/g, '');
+    let value = amount.value.replace(/\D/g, '');
 
     // passes the value to cents, so it can be properly formatted afterwards
     value = Number(value/100);
 
     amount.value = value=formatCurrencyToBrl(value);
 }
+
 
 function formatCurrencyToBrl(value){
      value.toLocaleString('pt-BR', {
@@ -39,7 +40,11 @@ form.onsubmit = (event) => {
         amount: amount.value,
         created_at: new Date(),
     }
+    addExpense(newExpense)
 }    
+
+
+
 
 function addExpense(newExpense){
   
