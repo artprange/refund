@@ -3,10 +3,12 @@ const form = document.querySelector('form');
 const amount = document.getElementById('amount');
 const expense = document.getElementById('expense');
 const category = document.getElementById('category');
-const itemQuantity = document.querySelector(' aside header p span');
+
 
 //selects the list element
 const expenseList = document.querySelector('ul');
+const totalExpenses = document.querySelector('aside header h2');
+const itemQuantity = document.querySelector(' aside header p span');
 
 
 
@@ -128,7 +130,7 @@ function  updateTotals(){
             const itemAmount = items[item].querySelector('.expense-amount');
 
             //removes the non-numeric characters and swaps the ',' for '.'
-            let value = itemAmount.textContent.replace(/[^\d]/g, '').replace(',', '.');
+            let value = itemAmount.textContent.replace(/[^\d,]/g, '').replace(',', '.');
 
             //converting the value to a number
             value = parseFloat(value);
@@ -137,12 +139,26 @@ function  updateTotals(){
             if(isNaN(value)){
                 return alert("Insira um número válido para o valor da despesa.");
             }
-
+                //increments the total amount
+        total += Number(value);
         }
 
-        //increments the total amount
-        total += Number(value);
+        //creating the span element to display the total on the accurate format
+        const brlSymbol = document.createElement('small');
+        brlSymbol.textContent = 'R$';
 
+
+        //formats and removes the R$ from the total
+        total = formatCurrencyToBrl(total).toUpperCase().replace('R$', '');
+
+        //resets the element content
+        totalExpenses.innerHTML = '';
+
+        //adds the total to the element
+        totalExpenses.append(brlSymbol, total);
+ 
+
+    
     } catch (error){
         console.log(error);
         alert("Não foi possível atualizar os totais. Tente novamente em alguns minutos.");
