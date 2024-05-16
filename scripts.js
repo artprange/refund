@@ -118,6 +118,31 @@ function  updateTotals(){
 
         //updates the list quantity
         itemQuantity.textContent = `${items.length} ${items.length > 1 ? 'itens' : 'item'}`;
+
+
+        //variables to store the totals
+        let total = 0;
+        
+        //goind through all the items
+        for(let item=0; item < items.length; item++){
+            const itemAmount = items[item].querySelector('.expense-amount');
+
+            //removes the non-numeric characters and swaps the ',' for '.'
+            let value = itemAmount.textContent.replace(/[^\d]/g, '').replace(',', '.');
+
+            //converting the value to a number
+            value = parseFloat(value);
+
+            //checks if it's a valid number
+            if(isNaN(value)){
+                return alert("Insira um número válido para o valor da despesa.");
+            }
+
+        }
+
+        //increments the total amount
+        total += Number(value);
+
     } catch (error){
         console.log(error);
         alert("Não foi possível atualizar os totais. Tente novamente em alguns minutos.");
